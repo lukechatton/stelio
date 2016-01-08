@@ -33,11 +33,12 @@ navigatePlugin(bot);
 
 var master = '';
 
-setInterval(function() {
-    if(master != '' && bot.players[master]) {
-        bot.navigate.to(bot.players[master].entity.position);
-    }
-}, 1000);
+//setInterval(function() {
+//    if(master != '' && bot.players[master]) {
+//        bot.navigate.to(bot.players[master].entity.position);
+//    }
+//}, 1000);
+
 
 bot.navigate.blocksToAvoid[132] = true; // avoid tripwire
 bot.navigate.blocksToAvoid[59] = true; // ok to trample crops
@@ -61,6 +62,7 @@ bot.on('chat', function(username, message) {
     if(message == 'setmaster') {
         console.log('setting master to ' + username);
         master = username;
+        bot.navigate.follow(username);
     }
     else if (message === 'come') {
         bot.navigate.to(target.position);

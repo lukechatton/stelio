@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "mineflayer": "git+https://github.com/lukechatton/mineflayer.git",
-    "mineflayer-navigate": "git+https://github.com/andrewrk/mineflayer-navigate.git"
+    "mineflayer-navigate": "git+https://github.com/lukechatton/mineflayer-navigate.git"
   }
 }
