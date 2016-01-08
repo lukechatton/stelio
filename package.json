@@ -9,6 +9,7 @@
   "author": "Luke Chatton",
   "license": "ISC",
   "dependencies": {
-    "mineflayer": "git+https://github.com/lukechatton/mineflayer.git"
+    "mineflayer": "git+https://github.com/lukechatton/mineflayer.git",
+    "mineflayer-navigate": "git+https://github.com/andrewrk/mineflayer-navigate.git"
   }
 }
