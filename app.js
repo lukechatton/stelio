@@ -1,20 +1,38 @@
 var mineflayer = require('mineflayer');
 
-var bot = mineflayer.createBot({
-    host: "localhost", // optional
-    port: 25565,       // optional
-    username: "snicktrix@gmail.com", // email and password are required only for
-    password: "----",          // online-mode=true servers
-});
+var config = require('./config.json');
+
+var options;
+if(config.password && config.password != "") {
+    options =  {
+        host: config.host,
+        port: config.port,
+        username: config.username,
+        password: config.password,
+        verbose: config.verbose
+    }
+} else {
+    options =  {
+        host: config.host,
+        port: config.port,
+        username: config.username,
+        verbose: config.verbose
+    }
+}
+
+var bot = mineflayer.createBot(options);
 
 //example of adding a plugin
 //require('./node_modules/mineflayer/lib/plugins/entities')(bot);
 
+bot.on('login', function() {
+    console.log('Tyrone has established connection.')
+})
 
 //echoes any chat messages
 bot.on('chat', function(username, message) {
     if (username === bot.username) return;
-    bot.chat(message);
+    bot.chat("What up dog");
 });
 
 bot.on('error', function(err) {
