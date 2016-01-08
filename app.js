@@ -26,7 +26,7 @@ var bot = mineflayer.createBot(options);
 //require('./node_modules/mineflayer/lib/plugins/entities')(bot);
 
 bot.on('login', function() {
-    console.log('Tyrone has established connection.')
+    console.log(bot.username + ' has established connection.')
 })
 
 //echoes any chat messages
