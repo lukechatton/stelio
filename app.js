@@ -33,6 +33,9 @@ navigatePlugin(bot);
 
 var master = '';
 
+var health = 20;
+var food = 20;
+
 //setInterval(function() {
 //    if(master != '' && bot.players[master]) {
 //        bot.navigate.to(bot.players[master].entity.position);
@@ -95,9 +98,31 @@ bot.on('chat', function(username, message) {
 // ===================== //
 
 
-function attack(player) {
-  bot.attack(player);
-}
+// Fires on health or food change
+/*
+ Doesn't work reliably for some reason.
+ It only recognizes health loss once, then
+ it has to re-gain health before it notices
+ loss again, and same with gaining.
+*/
+bot.on('health', function() {
+  // If bot lost health
+  if (bot.health < health) {
+
+  }
+  // If bot gained health
+  else if (bot.health > health) {
+
+  }
+
+  // If bot lost food
+  if (bot.food < food) {
+  
+  }
+
+  health = bot.health;
+  food = bot.food;
+});
 
 
 // ===================== //
@@ -107,7 +132,11 @@ function attack(player) {
 
 bot.on('login', function() {
     console.log(bot.username + ' has established connection.')
-})
+});
+bot.on('spawn', function() {
+  health = bot.health;
+  food = bot.food;
+});
 
 //echoes any chat messages
 //bot.on('chat', function(username, message) {
