@@ -39,6 +39,7 @@ var master = '';
 //    }
 //}, 1000);
 
+var dancingB = false;
 
 bot.navigate.blocksToAvoid[132] = true; // avoid tripwire
 bot.navigate.blocksToAvoid[59] = true; // ok to trample crops
@@ -55,6 +56,9 @@ bot.navigate.on('arrived', function () {
 bot.navigate.on('interrupted', function() {
     bot.chat("stopping");
 });
+bot.on('death', function() {
+  bot.navigate.stop();
+});
 bot.on('chat', function(username, message) {
     // navigate to whoever talks
     if (username === bot.username) return;
@@ -62,21 +66,38 @@ bot.on('chat', function(username, message) {
     if(message == 'setmaster') {
         console.log('setting master to ' + username);
         master = username;
-        bot.navigate.follow(username);
     }
     else if (message === 'come') {
         bot.navigate.to(target.position);
     }
     else if (message === 'stop') {
         bot.navigate.stop();
+        dancingB = false;
+        //bot.navigate.stopFollowing();
+    }
+    else if (message === 'follow') {
+        bot.navigate.follow(target.username);
+    }
+    else if (message === 'attack') {
+        bot.navigate.follow(target.username);
+        setInterval(function() {
+            bot.attack(target);
+        }, 100);
+    }
+    else if (message === 'dance') {
+        dance();
     }
 });
 
 
+// ===================== //
+//        COMBAT         //
+// ===================== //
 
 
-
-
+function attack(player) {
+  bot.attack(player);
+}
 
 
 // ===================== //
@@ -94,6 +115,34 @@ bot.on('login', function() {
 //    bot.chat("What up dog");
 //});
 
+function dance() {
+    dancingB = true;
+    var dancing = setInterval(function(){
+        var min = 0,
+            max = 2;
+        var rand = randInt(0, 3);
+        switch(rand) {
+        case 0:
+            bot.setControlState('jump', true);
+            bot.setControlState('jump', false);
+            break;
+        case 1:
+            bot.look(randInt(0, 180), randInt(0, 90), true);
+            break;
+        case 2:
+            bot.activateItem();
+        }
+
+        if (dancingB === false) {
+            clearInterval(dancing);
+        }
+    }, 100);
+}
+
 bot.on('error', function(err) {
     console.log(err);
 });
+
+function randInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
